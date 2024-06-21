@@ -291,7 +291,7 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
       body: _drawerOptions[_currentIndex],
     );
   }
-
+/*
   Future<void> _firstTimeDialog() async {
     return showDialog<void>(
         context: context,
@@ -521,18 +521,6 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
             ),
           );
         });
-    /*if (result != null) {
-      setState(() {
-        userData2 = userData;
-      });
-    }*/
-  }
+   
+  }*/
 }
-/*listOfValue.map((String val) {
-                                return DropdownMenuItem(
-                                  value: val,
-                                  child: Text(
-                                    val,
-                                  ),
-                                );
-                              }).toList(),*/
