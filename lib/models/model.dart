@@ -56,7 +56,7 @@ final questions = [
       ]),
   Question(
       text:
-          'قال تعالى: \n وقلد جاءكم موسى .......... ثم اتخذتم العجل من بعده وأنتم ظالمون',
+          'قال تعالى: \n ولقد جاءكم موسى .......... ثم اتخذتم العجل من بعده وأنتم ظالمون',
       options: [
         Option(text: 'بالبينات', isCorrect: true),
         Option(text: 'بالمعجزات', isCorrect: false),

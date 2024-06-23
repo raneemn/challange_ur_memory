@@ -21,7 +21,7 @@ class _LeadingState extends State<Leading> {
           child: Column(
             children: [
               Image.asset(
-                'assets/images/logoHandWritten.png',
+                'assets/images/Capture.PNG',
                 width: 189,
                 height: 106,
               ),
@@ -93,7 +93,9 @@ class _LeadingState extends State<Leading> {
                                     OutlinedButton(
                                         onPressed: () {
                                           Navigator.pushNamed(
-                                              context, Home.routeName,);
+                                            context,
+                                            Home.routeName,
+                                          );
                                         },
                                         style: ElevatedButton.styleFrom(
                                           fixedSize: Size(353, 65),
@@ -123,8 +125,12 @@ class _LeadingState extends State<Leading> {
                                       height: 15,
                                     ),
                                     OutlinedButton(
-                                        onPressed: () { Navigator.pushNamed(
-                                              context, Home.routeName,);},
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            Home.routeName,
+                                          );
+                                        },
                                         style: ElevatedButton.styleFrom(
                                           fixedSize: Size(353, 65),
                                           side: BorderSide(

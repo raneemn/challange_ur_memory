@@ -142,7 +142,7 @@ class _IndividualState extends State<Individual> {
                 context: context,
                 builder: (BuildContext context) {
                   return Container(
-                    height: 220,
+                    height: 200,
                     padding: EdgeInsets.only(top: 15, left: 20, right: 20),
                     decoration: BoxDecoration(
                         color: Colors.black,
@@ -154,12 +154,12 @@ class _IndividualState extends State<Individual> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           const Text(
-                            'إذا أنهيت التّحدي الآن فلن تستطيع الدّخول إليه مرّة أخرى, لكن سيتم تجديده لك كل يوم في الوقت المحدّد مسبقاً.',
+                            'هل تريد فعلاً إنهاء التّحدّي الآن؟',
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 24, color: Colors.white),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
