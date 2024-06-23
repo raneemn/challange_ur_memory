@@ -6,6 +6,7 @@ import 'package:challenge_ur_memory/BottomNavigaionBar/profileNav.dart';
 import 'package:challenge_ur_memory/Daily%20Challange/dailyInfo.dart';
 import 'package:challenge_ur_memory/Daily%20Challange/questionWidget.dart';
 import 'package:challenge_ur_memory/Daily%20Challange/scoreWidget.dart';
+import 'package:challenge_ur_memory/Individual%20challenge/individual.dart';
 import 'package:challenge_ur_memory/Individual%20challenge/selectPartsWgt.dart';
 import 'package:challenge_ur_memory/home.dart';
 import 'package:challenge_ur_memory/sendMail.dart';
@@ -35,6 +36,7 @@ class ChallangeUrMemory extends StatelessWidget {
         ScoreWidget.routeName: (context) => const ScoreWidget(),
         SelectPartsWgt.routeName: (context) => const SelectPartsWgt(),
         sendMailWgt.routeName: (context) => const sendMailWgt(),
+        Individual.routeName :(context)=> const Individual(),
       },
       home: Leading(),
       builder: (context, child) => Directionality(

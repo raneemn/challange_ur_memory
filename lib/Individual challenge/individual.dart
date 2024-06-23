@@ -1,23 +1,25 @@
 import 'dart:async';
 import 'package:challenge_ur_memory/home.dart';
 import 'package:challenge_ur_memory/models/model.dart';
+import 'package:challenge_ur_memory/models/userInfo.dart';
 import 'package:flutter/material.dart';
 
-class QuestionWidget extends StatefulWidget {
-  const QuestionWidget({super.key});
-  static const routeName = '/question';
+class Individual extends StatefulWidget {
+  const Individual({super.key});
+  static const routeName = '/individual';
 
   @override
-  State<QuestionWidget> createState() => _QuestionWidgetState();
+  State<Individual> createState() => _IndividualState();
 }
 
-class _QuestionWidgetState extends State<QuestionWidget> {
+class _IndividualState extends State<Individual> {
   late PageController _controller;
   int _questionNumber = 1;
   int _score = 0;
   bool _isLocked = false;
-  int timeLeft = 59;
+  int timeLeft = 0;
   late Timer timer;
+  String selectedParts = '';
 
   @override
   void initState() {
@@ -29,24 +31,24 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   void _startTimer() {
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (timeLeft > 0) {
-        setState(() {
-          timeLeft--;
-        });
-      } else {
-        dispose();
-      }
+      setState(() {
+        timeLeft++;
+      });
     });
   }
 
   @override
   void dispose() {
     timer.cancel();
-    scoreDialog(context, _score);
+    scoreDialog(context, _score, selectedParts);
   }
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      selectedParts = ModalRoute.of(context)!.settings.arguments.toString();
+    });
+
     return Scaffold(
       body: Column(
         children: [
@@ -183,7 +185,6 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                               ElevatedButton(
                                 onPressed: () {
                                   dispose();
-                                  //Navigator.pushNamed(context, Home.routeName);
                                 },
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xff084319),
@@ -226,7 +227,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     );
   }
 
-  Future scoreDialog(BuildContext context, int score) {
+  Future scoreDialog(BuildContext context, int score, String selectedParts) {
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -235,7 +236,15 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             AlertDialog(
               backgroundColor: Colors.white,
               alignment: Alignment.center,
-              title: Text('نتيجتك في تحدّي اليوم'),
+              title: Column(
+                children: [
+                  Text('نتيجتك في تحدّي الجزء'),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(selectedParts),
+                  )
+                ],
+              ),
               titlePadding: EdgeInsets.only(top: 60, left: 60, right: 60),
               content: Text(
                 ' $score / ${questions.length} ',
@@ -271,7 +280,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             ),
             Positioned(
                 right: 130,
-                top: 175,
+                top: 160,
                 child: Image.asset(
                     width: 150,
                     height: 150,
@@ -361,7 +370,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   });
                 } else {
                   dispose();
-                  //scoreDialog(context, _score);
+                  //scoreDialog(context, _score, selectedParts);
                   //Navigator.pushNamed(context, ScoreWidget.routeName,
                   //  arguments: _score);
                 }

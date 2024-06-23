@@ -1,4 +1,5 @@
 import 'package:challenge_ur_memory/Daily%20Challange/Q.dart';
+import 'package:challenge_ur_memory/Individual%20challenge/individual.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -162,27 +163,12 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
                   ),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                /*showModalBottomSheet<Void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: double.infinity,
-                        height: 150,
-                        alignment: Alignment.center,
-                        child: Text(
-                          'يجب تحديد جزء واحد على الأقل',
-                          style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      );
-                    });*/
+                
               } else {
                 Navigator.pushNamed(
                   context,
-                  QuestionWidget.routeName,
-                  //arguments: selectedParts,
+                  Individual.routeName,
+                  arguments: selectedParts,
                 );
               }
             },

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:challenge_ur_memory/Before%20registration/leading.dart';
 import 'package:challenge_ur_memory/BottomNavigaionBar/historyNav.dart';
@@ -31,6 +30,8 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
   userInfo? userData;
   userInfo? userData2 = userInfo(fName: '***');
   List<userInfo> allUsers = [];
+
+  int _score = 0;
 
   List<Widget> _drawerOptions = [
     HomeNav(),
@@ -76,9 +77,20 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
   void afterFirstLayout(BuildContext context) {
     //_firstTimeDialog();
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _score = 10;
+  }
+
+ 
 
   @override
   Widget build(BuildContext context) {
+   
+   
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -153,7 +165,7 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
                       children: [
                         Image.asset('assets/images/Star.png'),
                         Text(
-                          '500',
+                          '$_score',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ],
@@ -180,10 +192,9 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
                           if (index < 4) {
                             _onItemTapped(index);
                             Navigator.pop(context);
-                          } else if(index == 6){
+                          } else if (index == 6) {
                             Navigator.pushNamed(context, sendMailWgt.routeName);
-                          }
-                          else if (index == 7) {
+                          } else if (index == 7) {
                             Navigator.pushNamed(context, Leading.routeName);
                           } else
                             Navigator.pop(context);
