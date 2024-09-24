@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "969632208542",
+    "project_id": "challenges-2f0c5",
+    "storage_bucket": "challenges-2f0c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969632208542:android:bdf3d41adf3de2932c8d8f",
+        "android_client_info": {
+          "package_name": "com.example.challenge_ur_memory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969632208542-3qf2orsqdkflq7fj3qd06c8joarjbqp7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.challenge_ur_memory",
+            "certificate_hash": "e2f26be6a2a2d8429298107c3e69027d4057c061"
+          }
+        },
+        {
+          "client_id": "969632208542-dbibrtn0cjlics509am6mefv9106bt91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrvqiufcDouxI507NuoYVjbXWLXZ5OIQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969632208542-dbibrtn0cjlics509am6mefv9106bt91.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "969632208542-5sb67ugca8e7lv1t9tojcmr5a7kk1fsr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.challengeUrMemory"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

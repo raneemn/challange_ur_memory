@@ -7,9 +7,12 @@ import 'package:challenge_ur_memory/BottomNavigaionBar/profileNav.dart';
 import 'package:challenge_ur_memory/Daily%20Challange/dailyInfo.dart';
 import 'package:challenge_ur_memory/models/userInfo.dart';
 import 'package:challenge_ur_memory/sendMail.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -84,223 +87,254 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
     _score = 10;
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
-   
-   
-
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-              size: 40,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          ),
-        ),
-        title: Center(
-          child: Text(
-            _title[_currentIndex],
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF084319),
-            ),
-          ),
-        ),
-        actions: [
-          Builder(builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: Colors.white,
-                size: 40,
-              ),
-              onPressed: () {},
-            );
-          }),
-        ],
-      ),
-      drawer: Drawer(
-          backgroundColor: Color(0XFF9EDEA1),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(
-                  top: 50,
+    CollectionReference usersDataCollection =
+        FirebaseFirestore.instance.collection('userData');
+    String? currentUserEmail = FirebaseAuth.instance.currentUser!.email;
+    return FutureBuilder(
+        future: usersDataCollection
+            .where('email', isEqualTo: currentUserEmail)
+            .get(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+              extendBodyBehindAppBar: true,
+              resizeToAvoidBottomInset: false,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                leading: Builder(
+                  builder: (context) => IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    tooltip:
+                        MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  ),
                 ),
-                width: double.infinity,
-                height: 60,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Color(0xFFFBBC43),
-                    child: CircleAvatar(
-                      radius: 26,
-                      backgroundColor: Color(0xFFD9D9D9),
-                      child: Image.asset('assets/images/person.png'),
+                title: Center(
+                  child: Text(
+                    _title[_currentIndex],
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF084319),
                     ),
                   ),
-                  title: Text(
-                    'رنيم',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(fontSize: 24, color: Colors.white),
-                  ),
-                  trailing: Container(
-                    height: 50,
-                    width: 80,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/images/Star.png'),
-                        Text(
-                          '$_score',
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                actions: [
+                  Builder(builder: (BuildContext context) {
+                    return IconButton(
+                      icon: Icon(
+                        Icons.notifications_outlined,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: () {},
+                    );
+                  }),
+                ],
+              ),
+              drawer: Drawer(
+                  backgroundColor: Color(0XFF9EDEA1),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: 40,
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Divider(
-                thickness: 1,
-                endIndent: 20,
-                indent: 20,
-                color: Colors.white,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: 8,
-                    padding: EdgeInsets.only(right: 20),
-                    itemBuilder: ((context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          if (index < 4) {
-                            _onItemTapped(index);
-                            Navigator.pop(context);
-                          } else if (index == 6) {
-                            Navigator.pushNamed(context, sendMailWgt.routeName);
-                          } else if (index == 7) {
-                            Navigator.pushNamed(context, Leading.routeName);
-                          } else
-                            Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 56,
-                          width: double.infinity,
-                          child: Row(
-                            children: [
-                              Icon(
-                                menuIcons[index],
-                                size: 40,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                menuItems[index],
-                                style: TextStyle(
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
-                            ],
+                        width: double.infinity,
+                        height: 60,
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Color(0xFFFBBC43),
+                            child: CircleAvatar(
+                              radius: 26,
+                              backgroundColor: Color(0xFFD9D9D9),
+                              child:
+                                  snapshot.data!.docs.first['image'] == 'none'
+                                      ? Image.asset('assets/images/person.png')
+                                      : Image.asset(
+                                          snapshot.data!.docs.first['image']),
+                            ),
+                          ),
+                          title: Text(
+                            snapshot.data!.docs.first['firstName'],
+                            textAlign: TextAlign.right,
+                            style: TextStyle(fontSize: 24, color: Colors.white),
+                          ),
+                          trailing: Container(
+                            height: 50,
+                            width: 80,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/images/Star.png'),
+                                Text(
+                                  '${snapshot.data!.docs.first['totalScore']}',
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      );
-                    })),
-              )
-            ],
-          )),
-      extendBody: true,
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-        child: BottomAppBar(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          height: 70,
-          color: Color(0xFFFF9900),
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 5,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                iconSize: 35,
-                icon: const Icon(
-                  Icons.home_outlined,
-                  color: Colors.white,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        endIndent: 20,
+                        indent: 20,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: 8,
+                            padding: EdgeInsets.only(right: 20),
+                            itemBuilder: ((context, index) {
+                              return GestureDetector(
+                                onTap: () async {
+                                  if (index < 4) {
+                                    _onItemTapped(index);
+                                    Navigator.pop(context);
+                                  } else if (index == 6) {
+                                    Navigator.pushNamed(
+                                        context, sendMailWgt.routeName);
+                                  } else if (index == 7) {
+                                    GoogleSignIn googleSignIn = GoogleSignIn();
+                                    googleSignIn.disconnect();
+                                    await FirebaseAuth.instance.signOut();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        Leading.routeName,
+                                        (Route<dynamic> route) => false);
+                                  } else
+                                    Navigator.pop(context);
+                                },
+                                child: Container(
+                                  height: 56,
+                                  width: double.infinity,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        menuIcons[index],
+                                        size: 30,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        menuItems[index],
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            })),
+                      )
+                    ],
+                  )),
+              extendBody: true,
+              bottomNavigationBar: ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+                child: BottomAppBar(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 60,
+                  color: Color(0xFFFF9900),
+                  shape: const CircularNotchedRectangle(),
+                  notchMargin: 5,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      IconButton(
+                        iconSize: 30,
+                        icon: const Icon(
+                          Icons.home_outlined,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _onItemTapped(0);
+                        },
+                      ),
+                      IconButton(
+                        iconSize: 30,
+                        icon: const Icon(
+                          Icons.leaderboard_outlined,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _onItemTapped(1);
+                        },
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      IconButton(
+                        iconSize: 30,
+                        icon: const Icon(
+                          Icons.history_outlined,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _onItemTapped(2);
+                        },
+                      ),
+                      IconButton(
+                        iconSize: 30,
+                        icon: const Icon(
+                          Icons.person_outlined,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _onItemTapped(3);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+              floatingActionButton: FloatingActionButton(
                 onPressed: () {
-                  _onItemTapped(0);
+                   Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          DailyInfo(selectedParts:{1,2},
+                          totalScore: snapshot.data!.docs.first['totalScore'],
+                          userDocId: snapshot.data!.docs.first.id,)));
                 },
+                backgroundColor: Color(0xFFFF9900),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+                child: Container(
+                    margin: EdgeInsets.all(5),
+                    child: Image.asset('assets/images/24hour.png')),
               ),
-              IconButton(
-                iconSize: 35,
-                icon: const Icon(
-                  Icons.leaderboard_outlined,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  _onItemTapped(1);
-                },
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              IconButton(
-                iconSize: 35,
-                icon: const Icon(
-                  Icons.history_outlined,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  _onItemTapped(2);
-                },
-              ),
-              IconButton(
-                iconSize: 35,
-                icon: const Icon(
-                  Icons.person_outlined,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  _onItemTapped(3);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, DailyInfo.routeName);
-        },
-        backgroundColor: Color(0xFFFF9900),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        child: Container(
-            margin: EdgeInsets.all(5),
-            child: Image.asset('assets/images/24hour.png')),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: _drawerOptions[_currentIndex],
-    );
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+              body: _drawerOptions[_currentIndex],
+            );
+          } else {
+            return Text('Is Loading . . .');
+          }
+        });
   }
 /*
   Future<void> _firstTimeDialog() async {

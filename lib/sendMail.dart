@@ -17,11 +17,10 @@ class _sendMailWgtState extends State<sendMailWgt> {
         title: Text('اقترح لنا'),
         titleTextStyle: TextStyle(
           color: Colors.white,
-          fontSize: 25,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
-        
       ),
       body: Container(
         color: Colors.white,
@@ -34,14 +33,14 @@ class _sendMailWgtState extends State<sendMailWgt> {
                 hintText: 'yourEmail@info.com',
                 hintTextDirection: TextDirection.ltr,
                 hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 255, 190, 92), fontSize: 17),
+                    color: Color.fromARGB(255, 255, 190, 92), fontSize: 15),
               ),
-              style: TextStyle(color: Color(0xffFF9900), fontSize: 17),
+              style: TextStyle(color: Color(0xffFF9900), fontSize: 15),
               textDirection: TextDirection.ltr,
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             TextField(
               decoration: InputDecoration(
@@ -50,39 +49,39 @@ class _sendMailWgtState extends State<sendMailWgt> {
                 hintText: 'Email@info.com',
                 hintTextDirection: TextDirection.ltr,
                 hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 255, 190, 92), fontSize: 17),
+                    color: Color.fromARGB(255, 255, 190, 92), fontSize: 15),
               ),
-              style: TextStyle(color: Color(0xffFF9900), fontSize: 17),
+              style: TextStyle(color: Color(0xffFF9900), fontSize: 15),
               textDirection: TextDirection.ltr,
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             TextField(
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 prefixText: 'الموضوع:',
               ),
-              style: TextStyle(color: Color(0xffFF9900), fontSize: 17),
+              style: TextStyle(color: Color(0xffFF9900), fontSize: 16),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             TextField(
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 hintText: 'أكتب هنا اقتراحك ',
                 hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 255, 190, 92), fontSize: 17),
+                    color: Color.fromARGB(255, 255, 190, 92), fontSize: 15),
               ),
-              style: TextStyle(color: Color(0xffFF9900), fontSize: 17),
+              style: TextStyle(color: Color(0xffFF9900), fontSize: 15),
               maxLines: 10,
             ),
             SizedBox(height: 30),
             SizedBox(
-              width: 250,
-              height: 50,
+              width: 150,
+              height: 40,
               child: ElevatedButton(
                   onPressed: () {},
                   style: ButtonStyle(
@@ -96,7 +95,7 @@ class _sendMailWgtState extends State<sendMailWgt> {
                   child: const Text(
                     'إرسال',
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   )),

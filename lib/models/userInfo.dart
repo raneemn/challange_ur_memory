@@ -1,21 +1,41 @@
+
 class userInfo {
-  String fName;
-  String email;
-  String country;
-  String numOfParts;
-  String selectedParts;
-  int score;
-  String image;
-  String dailyTime;
+  final String email;
+  final String fName;
+  final String country;
+  final String numOfParts;
+  final String selectedParts;
+  final int totalScore;
+  final String image;
+  final String dailyTime;
 
   userInfo({
-    this.fName = '',
-    this.email = '',
-    this.country = '',
-    this.numOfParts = '',
-    this.selectedParts = '',
-    this.score = 0,
-    this.image = '',
-    this.dailyTime='',
+    this.email = 'aaa',
+    this.fName = 'aaa',
+    this.country = 'aaa',
+    this.numOfParts = 'aaa',
+    this.selectedParts = '111',
+    this.totalScore = 0,
+    this.image = 'aaa',
+    this.dailyTime = 'aaa',
   });
+
+  factory userInfo.fromJson(jsonData) {
+    return userInfo(
+      email: jsonData['email'],
+      fName: jsonData['firstName'],
+      country: jsonData['country'],
+      numOfParts: jsonData['numOfParts'],
+      selectedParts: jsonData['selectedParts'] ,
+      totalScore: jsonData['totalScore'],
+      image: jsonData['image'],
+      dailyTime: jsonData['dailyTime'],
+    );
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'UserInfo(email: $email, firstName:$fName, country: $country, numOfParts: $numOfParts, selectedParts: $selectedParts, totalScore:$totalScore, image:$image, dailyTime:$dailyTime)';
+  }
 }

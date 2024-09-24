@@ -11,28 +11,28 @@ class LeaderBoardNav extends StatefulWidget {
 class _LeaderBoardNavState extends State<LeaderBoardNav> {
   bool btnTapped = false;
   List<userInfo> countryUsersData = [
-    userInfo(fName: 'رنيم', score: 500),
-    userInfo(fName: 'جواد', score: 470),
-    userInfo(fName: 'مريم', score: 450),
-    userInfo(fName: 'عائشة', score: 430),
-    userInfo(fName: 'مصطفى', score: 400),
-    userInfo(fName: 'لجين', score: 390),
-    userInfo(fName: 'عبدالله', score: 388),
-    userInfo(fName: 'سائد', score: 377),
-    userInfo(fName: 'سلوى', score: 350),
-    userInfo(fName: 'فاطمة', score: 346),
+    userInfo(fName: 'إيمان', totalScore: 500),
+    userInfo(fName: 'جواد', totalScore: 470),
+    userInfo(fName: 'مريم', totalScore: 450),
+    userInfo(fName: 'عائشة', totalScore: 430),
+    userInfo(fName: 'مصطفى', totalScore: 400),
+    userInfo(fName: 'لجين', totalScore: 390),
+    userInfo(fName: 'عبدالله', totalScore: 388),
+    userInfo(fName: 'سائد', totalScore: 377),
+    userInfo(fName: 'سلوى', totalScore: 350),
+    userInfo(fName: 'فاطمة', totalScore: 346),
   ];
   List<userInfo> worldUsersData = [
-    userInfo(fName: 'منيرة', score: 1500),
-    userInfo(fName: 'عبدالله', score: 1470),
-    userInfo(fName: 'سلمى', score: 1450),
-    userInfo(fName: 'يزن', score: 1430),
-    userInfo(fName: 'محمد', score: 1400),
-    userInfo(fName: 'عمران', score: 1390),
-    userInfo(fName: 'غفران', score: 1388),
-    userInfo(fName: 'رحمة', score: 1377),
-    userInfo(fName: 'مها', score: 1350),
-    userInfo(fName: 'رقية', score: 1346),
+    userInfo(fName: 'منيرة', totalScore: 1500),
+    userInfo(fName: 'عبدالله', totalScore: 1470),
+    userInfo(fName: 'سلمى', totalScore: 1450),
+    userInfo(fName: 'يزن', totalScore: 1430),
+    userInfo(fName: 'محمد', totalScore: 1400),
+    userInfo(fName: 'عمران', totalScore: 1390),
+    userInfo(fName: 'غفران', totalScore: 1388),
+    userInfo(fName: 'رحمة', totalScore: 1377),
+    userInfo(fName: 'مها', totalScore: 1350),
+    userInfo(fName: 'رقية', totalScore: 1346),
   ];
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            height: 345,
+            height: 310,
             padding: EdgeInsets.only(left: 20, right: 20, top: 90),
             color: Color(0XFF9EDEA1),
             child: Column(
@@ -56,8 +56,8 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                         });
                       },
                       child: Container(
-                        width: 90,
-                        height: 33,
+                        width: 70,
+                        height: 25,
                         decoration: BoxDecoration(
                           color:
                               btnTapped ? Color(0xFFCEEDD0) : Color(0xFFFBBC43),
@@ -69,7 +69,7 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                           'دولتك',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -83,8 +83,8 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                         });
                       },
                       child: Container(
-                        width: 90,
-                        height: 33,
+                        width: 70,
+                        height: 25,
                         decoration: BoxDecoration(
                           color:
                               btnTapped ? Color(0xFFFBBC43) : Color(0xFFCEEDD0),
@@ -96,7 +96,7 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                           'العالم',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -117,10 +117,10 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                           Stack(
                             children: [
                               CircleAvatar(
-                                radius: 50,
+                                radius: 40,
                                 backgroundColor: Colors.white,
                                 child: CircleAvatar(
-                                  radius: 47,
+                                  radius: 37,
                                   backgroundColor: Color(0xFF9EDEA1),
                                   child:
                                       Image.asset('assets/images/person.png'),
@@ -141,17 +141,17 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                                 : countryUsersData[1].fName,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF084319)),
                           ),
                           Text(
                             btnTapped
-                                ? worldUsersData[1].score.toString()
-                                : countryUsersData[1].score.toString(),
+                                ? worldUsersData[1].totalScore.toString()
+                                : countryUsersData[1].totalScore.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF084319)),
                           ),
@@ -166,10 +166,10 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                           Stack(
                             children: [
                               CircleAvatar(
-                                radius: 50,
+                                radius: 40,
                                 backgroundColor: Colors.white,
                                 child: CircleAvatar(
-                                  radius: 47,
+                                  radius: 37,
                                   backgroundColor: Color(0xFF9EDEA1),
                                   child:
                                       Image.asset('assets/images/person.png'),
@@ -190,17 +190,17 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                                 : countryUsersData[0].fName,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF084319)),
                           ),
                           Text(
                             btnTapped
-                                ? worldUsersData[0].score.toString()
-                                : countryUsersData[0].score.toString(),
+                                ? worldUsersData[0].totalScore.toString()
+                                : countryUsersData[0].totalScore.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF084319)),
                           ),
@@ -215,10 +215,10 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                           Stack(
                             children: [
                               CircleAvatar(
-                                radius: 50,
+                                radius: 40,
                                 backgroundColor: Colors.white,
                                 child: CircleAvatar(
-                                  radius: 47,
+                                  radius: 37,
                                   backgroundColor: Color(0xFF9EDEA1),
                                   child:
                                       Image.asset('assets/images/person.png'),
@@ -239,17 +239,17 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                                 : countryUsersData[2].fName,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF084319)),
                           ),
                           Text(
-                           btnTapped
-                                ? worldUsersData[2].score.toString()
-                                : countryUsersData[2].score.toString(),
+                            btnTapped
+                                ? worldUsersData[2].totalScore.toString()
+                                : countryUsersData[2].totalScore.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF084319)),
                           ),
@@ -270,16 +270,17 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                 return Container(
                   margin: EdgeInsets.symmetric(vertical: 5),
                   width: 370,
-                  height: 50,
+                  height: 40,
                   decoration: BoxDecoration(
                       color: Color(0xFFF6F2F2),
                       borderRadius: BorderRadius.circular(10)),
                   child: ListTile(
+                    isThreeLine: true,
                     leading: Text(
                       '${index + 4} ',
                       style: TextStyle(
                           color: Color(0xFF2479CD),
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold),
                     ),
                     title: Text(
@@ -291,13 +292,16 @@ class _LeaderBoardNavState extends State<LeaderBoardNav> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold),
                     ),
+                    subtitle: SizedBox(
+                      height: 30,
+                    ),
                     trailing: Text(
                       btnTapped
-                                ? worldUsersData[index + 3].score.toString()
-                                : countryUsersData[index + 3].score.toString(),
+                          ? worldUsersData[index + 3].totalScore.toString()
+                          : countryUsersData[index + 3].totalScore.toString(),
                       style: TextStyle(
                           color: Color(0xFF4FA3F6),
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold),
                     ),
                   ),

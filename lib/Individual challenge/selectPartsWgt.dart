@@ -1,12 +1,15 @@
-import 'package:challenge_ur_memory/Daily%20Challange/Q.dart';
-import 'package:challenge_ur_memory/Individual%20challenge/individual.dart';
+import 'package:challenge_ur_memory/Individual%20challenge/individual_challenge.dart';
+import 'package:challenge_ur_memory/models/QDB_connect.dart';
+import 'package:challenge_ur_memory/models/question_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class SelectPartsWgt extends StatefulWidget {
-  const SelectPartsWgt({super.key});
+  const SelectPartsWgt({super.key, required this.userDocId, required this.totalScore});
+  final String userDocId;
+  final int totalScore;
   static const routeName = '/SelectPartWgt';
 
   @override
@@ -32,6 +35,7 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
 
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -40,7 +44,7 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
         title: Text(
           'تحدّي فردي',
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 23,
             fontWeight: FontWeight.bold,
             color: Color(0xFF084319),
           ),
@@ -59,14 +63,14 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
           Text(
             'حدّد الأجزاء التي تريد تحدّي حفظك بها',
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 20,
               color: Colors.black,
             ),
           ),
           GridView.count(
               shrinkWrap: true,
-              padding: EdgeInsets.only(top: 30, left: 40, right: 40),
-              mainAxisSpacing: 15,
+              padding: EdgeInsets.only(top: 20, left: 40, right: 40),
+              mainAxisSpacing: 10,
               crossAxisSpacing: 15,
               crossAxisCount: 5,
               children: [
@@ -88,8 +92,8 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
                       });
                     },
                     child: Container(
-                      width: 50,
-                      height: 50,
+                      width: 40,
+                      height: 40,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: listOfContainers[i].selected || Allselected
@@ -109,7 +113,7 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
                   ),
               ]),
           SizedBox(
-            height: 15,
+            height: 10,
           ),
           Row(
             children: [
@@ -141,35 +145,35 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
               ),
             ],
           ),
-          SizedBox(
-            height: 15,
-          ),
           ElevatedButton(
             onPressed: () {
               if (selectedParts.isEmpty) {
                 final snackBar = SnackBar(
-                  backgroundColor: Colors.black,
+                  //backgroundColor: Colors.black,
                   content: Text(
                     'يجب تحديد جزء واحد على الأقل',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
-                  action: SnackBarAction(
-                    label: '',
-                    onPressed: () {},
-                  ),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                
               } else {
-                Navigator.pushNamed(
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => IndividualChallenge(
+                              selectedParts: selectedParts,
+                              totalScore: widget.totalScore,
+                              userDocId: widget.userDocId,
+                            )));
+                /*Navigator.pushNamed(
                   context,
-                  Individual.routeName,
-                  arguments: selectedParts,
-                );
+                  IndividualChallenge.routeName,
+                  arguments: selectedParts as Set<int>,
+                );*/
               }
             },
             style: ElevatedButton.styleFrom(
@@ -180,7 +184,7 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
             child: Text(
               'بسم الله أبدأ التّحدّي',
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
@@ -189,7 +193,6 @@ class _SelectPartsWgtState extends State<SelectPartsWgt> {
       ),
     );
   }
-
 }
 
 class containerInfo {
