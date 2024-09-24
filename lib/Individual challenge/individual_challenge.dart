@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:challenge_ur_memory/constants.dart';
 import 'package:challenge_ur_memory/home.dart';
+import 'package:challenge_ur_memory/main.dart';
 import 'package:challenge_ur_memory/models/QDB_connect.dart';
 import 'package:challenge_ur_memory/models/question_model.dart';
 import 'package:challenge_ur_memory/widgets/next_button.dart';
@@ -13,7 +16,10 @@ import 'package:flutter/material.dart';
 
 class IndividualChallenge extends StatefulWidget {
   const IndividualChallenge(
-      {super.key, required this.selectedParts, required this.totalScore, required this.userDocId});
+      {super.key,
+      required this.selectedParts,
+      required this.totalScore,
+      required this.userDocId});
   final Set<int> selectedParts;
   final int totalScore;
   final String userDocId;
@@ -49,13 +55,36 @@ class _IndividualChallengeState extends State<IndividualChallenge> {
   bool isPressed = false;
   bool isAlreadySelected = false;
 
+  int timeLeft = 59;
+  late Timer timer;
+  int qLength = 0;
+
+  void _startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (timeLeft > 0) {
+        setState(() {
+          timeLeft--;
+        });
+      } else {
+        timer.cancel();
+        showDialog(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => ResultBox(
+            result: score, questionLength: qLength, onTap: startOver));
+  }
+      
+    });
+  }
+
   Set<int> selectedParts = {};
 
   void nextQuestion(int questionLength) {
     if (index == questionLength - 1) {
       updateScore(widget.totalScore);
+      timer.cancel();
       showDialog(
-          context: context,
+          context: navigatorKey.currentContext!,
           barrierDismissible: false,
           builder: (context) => ResultBox(
               result: score, questionLength: questionLength, onTap: startOver));
@@ -107,8 +136,11 @@ class _IndividualChallengeState extends State<IndividualChallenge> {
   @override
   void initState() {
     _questions = getQuestion();
+    _startTimer();
     super.initState();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +154,7 @@ class _IndividualChallengeState extends State<IndividualChallenge> {
             );
           } else if (snapshot.hasData) {
             var extractData = snapshot.data as List<Question>;
+            qLength = extractData.length;
 
             return Scaffold(
               floatingActionButton: GestureDetector(
@@ -178,7 +211,7 @@ class _IndividualChallengeState extends State<IndividualChallenge> {
                                 color: Color(0xFF084319),
                               ),
                               Text(
-                                '00:00',
+                                '00:${timeLeft.toString()}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 18, color: Color(0xFF084319)),

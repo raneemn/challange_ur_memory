@@ -1,7 +1,8 @@
 import 'dart:io';
+import 'package:challenge_ur_memory/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:path/path.dart';
-import 'package:challenge_ur_memory/BottomNavigaionBar/profileNav.dart';
 import 'package:challenge_ur_memory/home.dart';
 import 'package:challenge_ur_memory/models/userInfo.dart';
 import 'package:challenge_ur_memory/widgets/customTextFormField.dart';
@@ -27,7 +28,42 @@ class _EditUserDataState extends State<EditUserData> {
   TextEditingController fName = TextEditingController();
   TextEditingController country = TextEditingController();
   TextEditingController numOfParts = TextEditingController();
-  TextEditingController selectedParts = TextEditingController();  
+
+  final List<int> parts = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ];
+  List<int> selected = [];
+  final controller = MultiSelectController<int>();
+  String oldSelected = '';
 
   File? file;
   String? url;
@@ -55,12 +91,15 @@ class _EditUserDataState extends State<EditUserData> {
     fName.text = widget.userData!.fName;
     country.text = widget.userData!.country;
     numOfParts.text = widget.userData!.numOfParts;
-    selectedParts.text = widget.userData!.selectedParts.toString();
+    oldSelected = widget.userData!.selectedParts.toString();
     dailyTime.text = widget.userData!.dailyTime;
+    
   }
 
   @override
   Widget build(BuildContext context) {
+    final items =
+        parts.map((e) => DropdownItem(label: '$e', value: e)).toList();
     CollectionReference userDataCollection =
         FirebaseFirestore.instance.collection('userData');
 
@@ -72,7 +111,7 @@ class _EditUserDataState extends State<EditUserData> {
               'firstName': fName.text,
               'country': country.text,
               'numOfParts': numOfParts.text,
-              'selectedParts': selectedParts.text,
+              'selectedParts': selected.toString(),
               'dailyTime': dailyTime.text,
               'image': url ?? 'none',
             })
@@ -83,9 +122,6 @@ class _EditUserDataState extends State<EditUserData> {
       }
     }
 
-/*file == null
-                        ? Image.asset('assets/images/person.png')
-                        : Image.file(file!),*/
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -155,13 +191,49 @@ class _EditUserDataState extends State<EditUserData> {
                 height: 7,
               ),
               const Text(
-                'حدّد الأجزاء (أرقام فقط بينهم فواصل)',
+                'الأجزاء',
                 style: TextStyle(color: Color(0xffFF9900), fontSize: 14),
               ),
-              CustomTextFormField(
-                controller: selectedParts,
-                hintText: '${widget.userData!.selectedParts}' ?? '0',
-              ),
+              MultiDropdown<int>(
+                items: items,
+                controller: controller,
+                enabled: true,
+                chipDecoration: const ChipDecoration(
+                  backgroundColor: lightGreen,
+                  wrap: true,
+                ),
+                fieldDecoration: FieldDecoration(
+                  hintText: oldSelected,
+                  hintStyle: const TextStyle(
+                      fontSize: 13, color: Color.fromRGBO(116, 116, 116, 1)),
+                  showClearIcon: false,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Color(0xffFF9900)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: Color(0xffFF9900),
+                    ),
+                  ),
+                ),
+                dropdownItemDecoration: const DropdownItemDecoration(
+                  selectedIcon: Icon(Icons.check_box, color: Color(0xffFF9900)),
+                ),
+                onSelectionChange: (selectedItems) {
+                  debugPrint("OnSelectionChange: $selectedItems");
+                  setState(() {
+                    selected = selectedItems;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يجب تحديد جزء واحد على الأقل';
+                  }
+                  return null;
+                },
+              ),              
               SizedBox(
                 height: 7,
               ),
@@ -231,7 +303,6 @@ class _EditUserDataState extends State<EditUserData> {
                   onPressed: () {
                     if (_key.currentState!.validate()) {
                       _key.currentState!.save();
-
                       updateUserData();
                       Navigator.pushNamedAndRemoveUntil(
                           context, Home.routeName, (route) => false);

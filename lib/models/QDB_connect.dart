@@ -32,7 +32,6 @@ class QDBconnect {
           newQuestions.add(newQustion);
         },
       );
-
       List<Question> questionByPart = [];
       for (int i = 0; i < selectedParts.length; i++) {
         newQuestions.forEach((e) {
@@ -41,7 +40,6 @@ class QDBconnect {
           }
         });
       }
-
       return questionByPart;
     });
   }

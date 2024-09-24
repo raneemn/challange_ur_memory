@@ -77,7 +77,8 @@ class _HomeNavState extends State<HomeNav> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: () {                                  
+                                    
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(

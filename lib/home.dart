@@ -35,7 +35,7 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
   List<userInfo> allUsers = [];
 
   int _score = 0;
-
+  String value = '';
   List<Widget> _drawerOptions = [
     HomeNav(),
     LeaderBoardNav(),
@@ -312,13 +312,25 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
-                   Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          DailyInfo(selectedParts:{1,2},
-                          totalScore: snapshot.data!.docs.first['totalScore'],
-                          userDocId: snapshot.data!.docs.first.id,)));
+                  value = snapshot.data!.docs.first['selectedParts'];
+                  print(value);
+                  Set<int> selectedParts = value
+                      .replaceAll('[', '')
+                      .replaceAll(']', '')
+                      .split(',')
+                      .map<int>((e) {
+                    return int.parse(e);
+                  }).toSet();
+                  print(selectedParts);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DailyInfo(
+                                selectedParts: selectedParts,
+                                totalScore:
+                                    snapshot.data!.docs.first['totalScore'],
+                                userDocId: snapshot.data!.docs.first.id,
+                              )));
                 },
                 backgroundColor: Color(0xFFFF9900),
                 shape: RoundedRectangleBorder(
@@ -332,7 +344,9 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
               body: _drawerOptions[_currentIndex],
             );
           } else {
-            return Text('Is Loading . . .');
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         });
   }
